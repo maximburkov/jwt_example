@@ -39,9 +39,12 @@ namespace JWT_Example.Controllers
 
         [HttpPost]
         [Route("Auth")]
-        public IActionResult Auth([FromBody]string login, [FromBody]string password)
+        public IActionResult Auth(AuthRequest auth)
+        //public IActionResult Auth(string login, string password)
         {
-            var claims = GetClaims(login, password);
+            
+            var claims = GetClaims(auth.Login, auth.Password);
+            //var claims = GetClaims(login, password);
             if (claims == null)
             {
                 return BadRequest(new { errorText = "Invalid username or password." });
@@ -61,7 +64,8 @@ namespace JWT_Example.Controllers
             var user = new UserDTO
             {
                 Login = claims.NameClaimType,
-                Role = claims.RoleClaimType
+                Role = claims.RoleClaimType,
+                Token = encodedJwt
             };
 
             return Ok(user);

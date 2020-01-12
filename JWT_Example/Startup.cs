@@ -55,6 +55,7 @@ namespace JWT_Example
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             //app.Use(async (context, next) =>
